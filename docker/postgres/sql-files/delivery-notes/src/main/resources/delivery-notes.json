@@ -1,0 +1,20 @@
+{
+  "NDL_pour_rundeck": {
+    "dependency": [],
+    "packages": [
+      {
+        "checkAfterInstall": [],
+        "extension": "tar.gz",
+        "filename": "package-sgbd-mh-${releaseSGBDVersion}.tar.gz",
+        "info": "tac-sgbd-mh",
+        "module": "tac-mh",
+        "name": "tac-sgbd-mh-${releaseSGBDVersion}",
+        "packageUrl": "https://artifact.socrate.vsct.fr/artifactory/tac-mvn-releases/com/vsct/tac/modif-horaire/package-sgbd/${releaseSGBDVersion}/package-sgbd-${releaseSGBDVersion}.tar.gz",
+        "targetTechno": "SGBD",
+        "type": "sgbd",
+        "type_techno": "POSTGRESQL",
+        "version": "${releaseSGBDVersion}"
+      }
+    ]
+  }
+}

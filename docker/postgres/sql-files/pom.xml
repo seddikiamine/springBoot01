@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.vsct.tac.modif-horaire</groupId>
+    <artifactId>package-sgbd</artifactId>
+    <version>1.0.0.0-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <name>package-sgbd</name>
+
+    <modules>
+        <module>delivery-notes</module>
+    </modules>
+
+    <properties>
+        <adminVersion>2.0.16.0</adminVersion>
+        <buildVersion>1.0</buildVersion>
+        <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
+        <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
+        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>tac-releases</id>
+            <name>TAC Releases</name>
+            <url>https://artifact.socrate.vsct.fr/artifactory/tac-mvn-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>tac-snapshots</id>
+            <name>TAC Snapshots</name>
+            <url>https://artifact.socrate.vsct.fr/artifactory/tac-mvn-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <scm>
+        <connection>scm:git:git@gitlab.socrate.vsct.fr:tac/modif-horaire/package-sgbd.git</connection>
+        <developerConnection>scm:git:git@gitlab.socrate.vsct.fr:tac/modif-horaire/package-sgbd.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.vsct.dbtools</groupId>
+            <artifactId>package-admin</artifactId>
+            <version>${adminVersion}</version>
+            <type>tar.gz</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>SGBD_TAC_MH_${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven-dependency-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>src-dependencies</id>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <outputDirectory/>
+                            <includeArtifactIds>package-admin</includeArtifactIds>
+                            <includeGroupIds>com.vsct.dbtools</includeGroupIds>
+                            <excludeTransitive>true</excludeTransitive>
+                            <excludeTypes>pom</excludeTypes>
+                        </configuration>
+                    </execution>
+                </executions>
+                <inherited>false</inherited>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${maven-assembly-plugin.version}</version>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptors>
+                        <descriptor>assembly/package-admin.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <inherited>false</inherited>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven-release-plugin.version}</version>
+                <configuration>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                </configuration>
+                <inherited>false</inherited>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

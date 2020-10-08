@@ -1,0 +1,14 @@
+<assembly>
+    <id>sgbd</id>
+
+    <formats>
+        <format>tar.gz</format>
+    </formats>
+
+    <fileSets>
+        <fileSet>
+            <outputDirectory></outputDirectory>
+            <directory>${buildVersion}</directory>
+        </fileSet>
+    </fileSets>
+</assembly>
